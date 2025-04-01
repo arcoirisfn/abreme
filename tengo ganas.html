@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta Regresiva - Viaje</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif; /* Fuente Times New Roman */
+            background-color: #F8B7D6; /* Rosa palo */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        #countdown {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .heart {
+            font-size: 4rem;
+            color: #FF1493; /* Rosa fuerte para el corazón */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Viaje</h1>
+    <div id="countdown"></div>
+    <div class="heart">❤️</div>
+
+    <script>
+        // Fecha objetivo: 1 de septiembre de 2025
+        const targetDate = new Date("September 1, 2025 00:00:00").getTime();
+
+        // Opción para mostrar los meses (true para mostrar, false para no mostrar)
+        const showMonths = true;
+
+        // Actualizar la cuenta regresiva cada segundo
+        const countdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // Cálculos de meses, días, horas, minutos y segundos
+            const months = Math.floor(distance / (1000 * 60 * 60 * 24 * 30.436875)); // Promedio de días en un mes
+            const days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30.436875)) / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Mostrar el resultado
+            let countdownText = '';
+            if (showMonths) {
+                countdownText = months + "m " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            } else {
+                countdownText = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            }
+
+            document.getElementById("countdown").innerHTML = countdownText;
+
+            // Si la cuenta regresiva ha terminado, mostrar mensaje
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById("countdown").innerHTML = "¡El día ha llegado!";
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
